@@ -53,6 +53,13 @@ export function validateDueDate(dueDate: unknown): ValidationResult {
     return { valid: false, error: 'Due date must be a valid date' }
   }
 
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  if (date < today) {
+    return { valid: false, error: 'Due date cannot be in the past' }
+  }
+
   return { valid: true }
 }
 
