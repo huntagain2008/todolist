@@ -29,6 +29,16 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
+### Vercel 部署
+
+1. 注册 [Turso](https://turso.tech) 并创建数据库
+2. 在 Vercel 导入 GitHub 仓库
+3. 设置环境变量 `DATABASE_URL`:
+   ```
+   libsql://your-database.turso.io?authToken=your-token
+   ```
+4. Deploy
+
 ## 环境变量说明
 
 | 变量名 | 说明 | 默认值 |
@@ -64,15 +74,14 @@ npm run test:run
 ### 测试覆盖
 
 - **功能测试**: 创建/编辑/删除/完成状态/筛选
-- **边界测试**: 空标题/超长标题/无效日期
+- **边界测试**: 空标题/超长标题/无效日期/过去日期拒绝
 - **API 测试**: 所有接口的 200/201/400/404 状态码
 
 ## 已知限制
 
-1. **单用户架构**: 数据存储在本地 SQLite 文件，不支持多用户并发写入
-2. **无数据迁移**: 使用 `prisma db push` 而非正式迁移，生产环境需迁移
-3. **无认证授权**: API 无权限控制，直接暴露
-4. **无分页**: GET /api/todos 返回全量数据，大数据量时需添加分页
+1. **无认证授权**: API 无权限控制，直接暴露
+2. **无分页**: GET /api/todos 返回全量数据，大数据量时需添加分页
+3. **Turso 免费版**: 单数据库，边缘读取有延迟
 
 ## 下一步可扩展建议
 
